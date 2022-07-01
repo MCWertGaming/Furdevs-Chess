@@ -1,0 +1,9 @@
+[submodule "dependencies/cpp-terminal"]
+	path = dependencies/cpp-terminal
+	url = https://github.com/jupyter-xeus/cpp-terminal
+[submodule "dependencies/foxspace"]
+	path = dependencies/foxspace
+	url = https://github.com/MCWertGaming/foxspace.git
+[submodule "dependencies/GTest"]
+	path = dependencies/GTest
+	url = https://github.com/google/googletest.git
