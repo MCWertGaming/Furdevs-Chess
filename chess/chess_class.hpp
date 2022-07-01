@@ -56,8 +56,15 @@ namespace Chess {
         Cords find_king(Piece_color color);
         // check if the king is in danger on its current position
         bool king_in_danger(Piece_color color);
-        // checks if the king would be in danger in the new position
-        bool king_in_danger(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
+        // checks if the king would be in danger when the piece is moved
+        bool king_in_danger(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, Piece_color color);
+
+        // check if it's checkmate
+        bool check_checkmate();
+        // check if it's stalemate
+        bool check_stalemate();
+        // check for draw
+        bool check_draw();
 
         // creates an empty field
         void init_empty();

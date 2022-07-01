@@ -142,6 +142,10 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
     if(get_piece(to_x, to_y) != Piece::empty && get_color(from_x, from_y) == get_color(to_x, to_y)) {
         return false;
     }
+    // skip if no movement happens
+    else if(from_x == to_x && from_y == to_y) {
+        return false;
+    }
 
     // check if the piece can move
     switch(get_piece(from_x, from_y)) {
@@ -166,7 +170,12 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
             if(!can_queen_move(from_x, from_y, to_x, to_y)) {return false;}
             break;
     }
-    // TODO: en passant
+    // check if the move put's the king into danger
+    if(king_in_danger(from_x, from_y, to_x, to_y, get_color(from_x, from_y))) {
+        return false;
+    }
+
+    // TODO: en passant, needs refactor of can_pawn_move, just copy the pawn location into a var
     // TODO: castling in the king movement
     // TODO: Check for checkmate
     // TODO: Check for stalemate
@@ -348,9 +357,27 @@ bool Chess::Chess::king_in_danger(Piece_color color) {
         }
     }
     // king can't be captured
-    return true;
+    return false;
 }
+bool Chess::Chess::king_in_danger(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, Piece_color color) {
+    // perform the move to check if the king keeps being in danger
 
+    // copy the current value of the field
+    uint8_t old_val = m_Chess_field[to_x][to_y];
+    // perform the move
+    m_Chess_field[to_x][to_y] = m_Chess_field[from_x][from_y];
+    m_Chess_field[from_x][from_y] = 0;
+
+    // check if the king is in danger
+    bool danger = king_in_danger(color);
+
+    // revert move
+    m_Chess_field[from_x][from_y] = m_Chess_field[to_x][to_y];
+    m_Chess_field[to_x][to_y] = old_val;
+
+    // return the result
+    return danger;
+}
 
 void Chess::Chess::init_empty() {
     for (uint8_t i = 0; i < 8; i++){
