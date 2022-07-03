@@ -7,7 +7,3 @@
 [submodule "dependencies/GTest"]
 	path = dependencies/GTest
 	url = https://github.com/google/googletest.git
-[submodule "dependencies/godot-cpp"]
-	path = dependencies/godot-cpp
-	url = https://github.com/godotengine/godot-cpp.git
-	branch = 3.4
