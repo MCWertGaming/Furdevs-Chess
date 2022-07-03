@@ -14,3 +14,6 @@ add_dependency_local(foxspace)
 set(INSTALL_GTEST OFF CACHE BOOL "disable gtest install" FORCE)
 set(BUILD_GMOCK OFF CACHE BOOL "disable gmock" FORCE)
 add_dependency_local(GTest)
+
+# Godot - UI
+add_dependency_local(godot-cpp)
