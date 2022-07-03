@@ -137,7 +137,7 @@ void Chess::Chess::remove_piece(uint8_t x, uint8_t y) {
     }
     m_Chess_field[x][y] = 0; // 0 represents an empty field
 }
-bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
+bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, bool check_danger) {
     // check if the destination is free
     if(get_piece(to_x, to_y) != Piece::empty && get_color(from_x, from_y) == get_color(to_x, to_y)) {
         return false;
@@ -170,9 +170,12 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
             if(!can_queen_move(from_x, from_y, to_x, to_y)) {return false;}
             break;
     }
-    // check if the move put's the king into danger
-    if(king_in_danger(from_x, from_y, to_x, to_y, get_color(from_x, from_y))) {
-        return false;
+    // avoid call chain with king_in_danger
+    if (check_danger) {
+        // check if the move put's the king into danger
+        if(king_in_danger(from_x, from_y, to_x, to_y, get_color(from_x, from_y))) {
+            return false;
+        }
     }
 
     // TODO: en passant, needs refactor of can_pawn_move, just copy the pawn location into a var
@@ -339,6 +342,21 @@ Chess::Cords Chess::Chess::find_king(Piece_color color) {
     }
     throw std::runtime_error("find_king: no king found!");
 }
+Chess::Cords Chess::Chess::find_enemy(Cords king, Piece_color color) {
+    // search for enemy pieces
+    for(uint8_t i = 0; i < 8; i++) {
+        for(uint8_t j = 0; j < 8; j++) {
+            // check if the found piece is from the enemy and not a king
+            if(get_piece(i, j) != Piece::king && get_color(i, j) != color) {
+                // check if the piece can reach the king
+                if(can_move(i, j, king.x, king.y, true)) {
+                    return Cords{i, j};
+                }
+            }
+        }
+    }
+    throw std::runtime_error("find_enemy: no enemy found!");
+}
 
 bool Chess::Chess::king_in_danger(Piece_color color) {
     // find kind
@@ -349,7 +367,7 @@ bool Chess::Chess::king_in_danger(Piece_color color) {
             // check if the field holds a piece of the opposite color
             if(get_color(i, j) != color) {
                 // check if it can reach the king
-                if (can_move(i, j, king.x, king.y)) {
+                if (can_move(i, j, king.x, king.y, false)) {
                     // piece and take the king
                     return true;
                 }
@@ -378,6 +396,25 @@ bool Chess::Chess::king_in_danger(uint8_t from_x, uint8_t from_y, uint8_t to_x, 
     // return the result
     return danger;
 }
+bool Chess::Chess::check_checkmate(Piece_color color) {
+    // find the king
+    Cords king = find_king(color);
+    // check if the king can move
+    if(can_move(king.x, king.y, king.x+1, king.y, true) ||
+       can_move(king.x, king.y, king.x+1, king.y+1, true) ||
+            can_move(king.x, king.y, king.x, king.y+1, true) ||
+            can_move(king.x, king.y, king.x-1, king.y+1, true) ||
+            can_move(king.x, king.y, king.x-1, king.y, true) ||
+            can_move(king.x, king.y, king.x-1, king.y-1, true) ||
+            can_move(king.x, king.y, king.x+1, king.y-1, true)) {
+        // the king can move away
+        return false;
+    }
+    // find the opponent
+
+}
+
+
 
 void Chess::Chess::init_empty() {
     for (uint8_t i = 0; i < 8; i++){
