@@ -45,13 +45,18 @@ namespace Chess {
         // stores the en passant location of the last moved pawn, (x,y), used by can_pawn_move()
         // TODO: Implement
         uint8_t m_en_passant_location[2]{};
+        // indicates which color did the last move
+        Piece_color m_last_move_color = Piece_color::empty;
 
     public: // TODO: Make private? (testing needed)
         Piece get_piece(uint8_t x, uint8_t y);
         Piece_color get_color(uint8_t x, uint8_t y);
+        // TODO: remove
         Piece_extra get_extra(uint8_t x, uint8_t y);
         void set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color, Piece_extra extra);
         void remove_piece(uint8_t x, uint8_t y);
+        // TODO: add testing
+        void move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
 
         // checks if the piece on the given position can move to the destination
         bool can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);

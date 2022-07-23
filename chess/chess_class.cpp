@@ -137,6 +137,10 @@ void Chess::Chess::remove_piece(uint8_t x, uint8_t y) {
     }
     m_Chess_field[x][y] = 0; // 0 represents an empty field
 }
+void Chess::Chess::move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
+    m_Chess_field[to_x][to_y] = m_Chess_field[from_x][from_y];
+    remove_piece(from_x, from_y);
+}
 bool Chess::Chess::can_auto_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
     switch(get_piece(from_x, from_y)) {
         case Piece::empty:
@@ -181,17 +185,36 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
             return false;
         }
 
-    // TODO: en passant, needs refactor of can_pawn_move, just copy the pawn location into a var
     // TODO: castling in the king movement
-    // TODO: Check for checkmate
-    // TODO: Check for stalemate
-    // TODO: Promotion
-    
+
 
     return true;
 }
 Chess::Game_state Chess::Chess::do_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, Piece_color color) {
+    // check if the given piece is of the right color and the right color is moving
+    if(get_color(from_x, from_y) != color || m_last_move_color == color) {
+        return Game_state::INVALID;
+    }
+    // check the movement
+    else if(!can_move(from_x, from_y, to_x, to_y)) {
+        return Game_state::INVALID;
+    }
 
+    // perform the movement
+    move_piece(from_x, from_y, to_x, to_y);
+
+    // TODO: Check for checkmate
+    // TODO: Check for stalemate
+    // TODO: Check for draw
+    // TODO: Promotion
+
+    // finishing up en-passant
+    m_en_passant_possible = m_en_passant_done;
+    m_en_passant_done = false;
+
+    // finishing up
+    m_last_move_color = color;
+    return Game_state::SUCCESS;
 }
 
 bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
