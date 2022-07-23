@@ -20,6 +20,13 @@ namespace Chess {
         empty,
         castling_possible = 100
     };
+    enum class Game_state {
+        SUCCESS,
+        INVALID,
+        CHECKMATE,
+        STALEMATE,
+        DRAW
+    };
     // holds field coordinates
     struct Cords {
         uint8_t x, y;
@@ -83,6 +90,8 @@ namespace Chess {
         void init_empty();
         // prepares the game startup
         void init_game();
+        // moves a piece and returns the game state
+        Game_state do_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, Piece_color color);
 
 
 
