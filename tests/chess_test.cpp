@@ -764,6 +764,20 @@ TEST(chess_class_test, king_in_danger_move_piece) {
     // check if the piece moving away causes danger
     EXPECT_FALSE(chess.can_move(0, 5, 1, 5));
 }
+TEST(chess_class_test, piece_move_test) {
+    Chess::Chess chess;
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    // move pieces
+    EXPECT_NO_THROW(chess.move_piece(0,0,0,1));
+    EXPECT_NO_THROW(chess.move_piece(7,7,7,6));
+    // check field
+    EXPECT_EQ(chess.get_piece(0,0), Chess::Piece::empty);
+    EXPECT_EQ(chess.get_piece(0,1), Chess::Piece::king);
+    EXPECT_EQ(chess.get_piece(7,7), Chess::Piece::empty);
+    EXPECT_EQ(chess.get_piece(7,6), Chess::Piece::king);
+}
+
 TEST(chess_class_test, new_test) {
     //
 }
