@@ -188,69 +188,56 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
     return true;
 }
 bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
-    // TODO: check for check on the new location too
     // check which color the piece has
-    // TODO: refactor
-    if(get_color(from_x, from_y) == Piece_color::white) {
-        // check the movement pattern
-        if(mk_vector(from_x, to_x) == 0 && mk_vector(from_y, to_y) == -1) {
-            // pawn moves forward, check if the next piece is empty
-            if (get_piece(to_x, to_y) == Piece::empty) {
-                return true;
-            } else {
-                // another piece is blocking the way
-                return false;
-            }
-        } else if (from_y == 1 && mk_vector(from_x, to_x) == 0 && mk_vector(from_y, to_y) == -2) {
-            // pawn moves two fields on its first move
-            // check if the destination and the field in between is empty
-            if(get_piece(to_x, to_y - 1) == Piece::empty && get_piece(to_x, to_y) == Piece::empty) {
-                return true;
-            } else {
-                // pieces are blocking the way
-                return false;
-            }
-        } else if ((mk_vector(from_x, to_x) == -1 || mk_vector(from_x, to_x) == 1) && mk_vector(from_y, to_y) == -1) {
-            // trying to go diagonally, check if a piece can be captured
-            if(get_color(to_x, to_y) == Piece_color::black) {
-                return true;
-            } else {
-                // no piece can be captured
-                return false;
-            }
-            // TODO: Check on passant
-        }
-    } else if(get_color(from_x, from_y) == Piece_color::black) {
-        // check the movement pattern for black pieces
-        if(mk_vector(from_x, to_x) == 0 && mk_vector(from_y, to_y) == 1) {
-            // pawn moves forward, check if the next piece is empty
-            if (get_piece(to_x, to_y) == Piece::empty) {
-                return true;
-            } else {
-                // another piece is blocking the way
-                return false;
-            }
-        } else if (from_y == 6 && mk_vector(from_x, to_x) == 0 && mk_vector(from_y, to_y) == 2) {
-            // pawn moves two fields on its first move
-            // check if the destination and the field in between is empty
-            if(get_piece(to_x, to_y + 1) == Piece::empty && get_piece(to_x, to_y) == Piece::empty) {
-                return true;
-            } else {
-                // pieces are blocking the way
-                return false;
-            }
-        } else if ((mk_vector(from_x, to_x) == 1 || mk_vector(from_x, to_x) == -1) && mk_vector(from_y, to_y) == 1) {
-            // trying to go diagonally, check if a piece can be captured
-            if(get_color(to_x, to_y) == Piece_color::white) {
-                return true;
-            } else {
-                // no piece can be captured
-                return false;
-            }
-            // TODO: Check on passant
-        }
+    int8_t direction;
+    switch(get_color(from_x, from_y)) {
+        case Piece_color::empty:
+            return false; // no piece exists to be moved
+        case Piece_color::white:
+            direction = -1;
+            break;
+        case Piece_color::black:
+            direction = 1;
+            break;
     }
-    // return if the given move was not covered
+
+    int8_t x_vec = mk_vector(from_x, to_x);
+    int8_t y_vec = mk_vector(from_y, to_y);
+    Piece destination = get_piece(to_x, to_y);
+
+    if(x_vec == 0 && y_vec == direction) {
+        // pawn moved one forward
+        // check if the destination is empty
+        if(destination == Piece::empty) {
+            return true;
+        }
+        // the destination is blocked by another piece
+        return false;
+    } else if (x_vec == 0 && y_vec == direction * 2 && (from_y == 1 || from_y == 6)) {
+        // pawn moved two forward
+        // check if the destination is empty and if the filed between is empty too
+        if(destination == Piece::empty && get_piece(from_x, from_y + direction) == Piece::empty) {
+            // set the on passant value
+            m_en_passant_done = true;
+            m_en_passant_location[0] = from_x;
+            m_en_passant_location[1] = from_y + direction;
+            return true;
+        }
+        // the destination is blocked by another piece
+        return false;
+    } else if (y_vec == direction && (x_vec == 1 || x_vec == -1)) {
+        // pawn takes enemy piece
+        // check if the destination includes an enemy
+        if(get_color(to_x, to_y) != get_color(from_x, from_y) && get_color(to_x, to_y) != Piece_color::empty) {
+            // the piece on the destination will be taken
+            return true;
+        }
+        // check if the pawn is doing en passant
+        else if(m_en_passant_possible && m_en_passant_location[0] == to_x, m_en_passant_location[1] == to_y) {
+            return true;
+        }
+        return false;
+    }
     return false;
 }
 // TODO: Refactor

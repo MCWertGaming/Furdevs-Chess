@@ -29,6 +29,15 @@ namespace Chess {
     private:
         // uint8_t can hold 0-255
         uint8_t m_Chess_field[8][8]{};
+        // indicates if en-passant is possible for this round, used by can_pawn_move()
+        // TODO: implement
+        bool m_en_passant_possible = false;
+        // indicates if en-passant is possible in the next move, used by move_piece()
+        // TODO: implement function
+        bool m_en_passant_done = false;
+        // stores the en passant location of the last moved pawn, (x,y), used by can_pawn_move()
+        // TODO: Implement
+        uint8_t m_en_passant_location[2]{};
 
     public: // TODO: Make private? (testing needed)
         Piece get_piece(uint8_t x, uint8_t y);
