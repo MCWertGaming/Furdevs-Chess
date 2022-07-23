@@ -47,7 +47,9 @@ namespace Chess {
         void remove_piece(uint8_t x, uint8_t y);
 
         // checks if the piece on the given position can move to the destination
-        bool can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, bool check_danger);
+        bool can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
+        // unified function for choosing the right movement rules for the given piece
+        bool can_auto_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
         // checks if the pawn can move to the destination
         bool can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
         // checks if the rook can move to the destination
