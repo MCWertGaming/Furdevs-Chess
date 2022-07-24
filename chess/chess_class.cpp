@@ -440,3 +440,28 @@ void Chess::Chess::init_empty() {
         }
     }
 }
+void Chess::Chess::init_game() {
+    set_piece(0,0,Piece::rook, Piece_color::white, Piece_extra::empty);
+    set_piece(1,0,Piece::knight, Piece_color::white, Piece_extra::empty);
+    set_piece(2,0,Piece::bishop, Piece_color::white, Piece_extra::empty);
+    set_piece(3,0,Piece::queen, Piece_color::white, Piece_extra::empty);
+    set_piece(4,0,Piece::king, Piece_color::white, Piece_extra::empty);
+    set_piece(5,0,Piece::bishop, Piece_color::white, Piece_extra::empty);
+    set_piece(6,0,Piece::knight, Piece_color::white, Piece_extra::empty);
+    set_piece(7,0,Piece::rook, Piece_color::white, Piece_extra::empty);
+
+    set_piece(0,7,Piece::rook, Piece_color::black, Piece_extra::empty);
+    set_piece(1,7,Piece::knight, Piece_color::black, Piece_extra::empty);
+    set_piece(2,7,Piece::bishop, Piece_color::black, Piece_extra::empty);
+    set_piece(3,7,Piece::queen, Piece_color::black, Piece_extra::empty);
+    set_piece(4,7,Piece::king, Piece_color::black, Piece_extra::empty);
+    set_piece(5,7,Piece::bishop, Piece_color::black, Piece_extra::empty);
+    set_piece(6,7,Piece::knight, Piece_color::black, Piece_extra::empty);
+    set_piece(7,7,Piece::rook, Piece_color::black, Piece_extra::empty);
+
+    // set pawns
+    for(uint8_t i = 0; i < 8; i++) {
+        set_piece(i,1,Piece::pawn, Piece_color::white, Piece_extra::empty);
+        set_piece(i,6,Piece::pawn, Piece_color::black, Piece_extra::empty);
+    }
+}
