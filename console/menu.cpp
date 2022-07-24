@@ -208,35 +208,35 @@ bool Menu::Menu::tick() {
             return true;
             break;
         case Input::WHITE_UP:
-            if(turn_color == Chess::Piece_color::white && cursor_y < 7) {cursor_y+1;}
+            if(turn_color == Chess::Piece_color::white && cursor_y < 7) {cursor_y++;}
             render();
             return true;
         case Input::WHITE_DOWN:
-            if(turn_color == Chess::Piece_color::white && cursor_y > 0) {cursor_y-1;}
+            if(turn_color == Chess::Piece_color::white && cursor_y > 0) {cursor_y--;}
             render();
             return true;
         case Input::WHITE_LEFT:
-            if(turn_color == Chess::Piece_color::white && cursor_x > 0) {cursor_x-1;}
+            if(turn_color == Chess::Piece_color::white && cursor_x > 0) {cursor_x--;}
             render();
             return true;
         case Input::WHITE_RIGHT:
-            if(turn_color == Chess::Piece_color::white && cursor_x < 7) {cursor_x+1;}
+            if(turn_color == Chess::Piece_color::white && cursor_x < 7) {cursor_x++;}
             render();
             return true;
         case Input::BLACK_UP:
-            if(turn_color == Chess::Piece_color::black) {cursor_y+1;}
+            if(turn_color == Chess::Piece_color::black) {cursor_y++;}
             render();
             return true;
         case Input::BLACK_DOWN:
-            if(turn_color == Chess::Piece_color::black) {cursor_y-1;}
+            if(turn_color == Chess::Piece_color::black) {cursor_y--;}
             render();
             return true;
         case Input::BLACK_LEFT:
-            if(turn_color == Chess::Piece_color::black) {cursor_x-1;}
+            if(turn_color == Chess::Piece_color::black) {cursor_x--;}
             render();
             return true;
         case Input::BLACK_RIGHT:
-            if(turn_color == Chess::Piece_color::black) {cursor_x+1;}
+            if(turn_color == Chess::Piece_color::black) {cursor_x++;}
             render();
             return true;
         case Input::PAUSE:
