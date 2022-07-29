@@ -45,7 +45,7 @@ std::string Menu::Menu::get_field_color(uint8_t field_x, uint8_t field_y, Term::
         return Term::color(turn_color == Chess::Piece_color::white ? Term::bg::bright_blue : Term::bg::blue);
     }
     // possible move
-    else if(chess.can_auto_move(cursor_x, cursor_y, field_x, field_y)) {
+    else if(chess.can_move(cursor_x, cursor_y, field_x, field_y)) {
         return Term::color(Term::bg::green);
     }
     // last moved piece
