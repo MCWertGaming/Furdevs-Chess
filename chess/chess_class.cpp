@@ -185,8 +185,14 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
             return false;
         }
 
+    // set en passant
+    if(m_en_passant_done) {
+        m_en_passant_possible = true;
+    } else {
+        m_en_passant_possible = false;
+    }
+    m_en_passant_done = false;
     // TODO: castling in the king movement
-
 
     return true;
 }
@@ -246,11 +252,8 @@ bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
     } else if (x_vec == 0 && y_vec == direction * 2 && (from_y == 1 || from_y == 6)) {
         // pawn moved two forward
         // check if the destination is empty and if the filed between is empty too
-        if(destination == Piece::empty && get_piece(from_x, from_y + direction) == Piece::empty) {
-            // set the on passant value
-            m_en_passant_done = true;
-            m_en_passant_location[0] = from_x;
-            m_en_passant_location[1] = from_y + direction;
+        if(destination == Piece::empty && get_piece(from_x, from_y + (direction * -1)) == Piece::empty) {
+            // the move can happen
             return true;
         }
         // the destination is blocked by another piece
@@ -263,7 +266,7 @@ bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
             return true;
         }
         // check if the pawn is doing en passant
-        else if(m_en_passant_possible && m_en_passant_location[0] == to_x, m_en_passant_location[1] == to_y) {
+        else if(m_en_passant_possible && m_en_passant_location[0] == to_x && m_en_passant_location[1] == to_y) {
             return true;
         }
         return false;
