@@ -134,11 +134,11 @@ void Menu::Main_menu::set_new_view(menu_view next_view) {
             if(next_view == menu_view::TITLE) {
                 Visual::animate_main_title(m_menu_start_x, m_menu_start_y, 2000);
             } else if (next_view == menu_view::ABOUT) {
-                Visual::animate_main_to_about(m_menu_start_x, m_menu_start_y, 1000);
+                Visual::animate_main_to_about(m_menu_start_x, m_menu_start_y, 200);
             }
             break;
         case menu_view::ABOUT: // next_view is always MAIN
-            Visual::animate_about_to_main(m_menu_start_x, m_menu_start_y, 1000);
+            Visual::animate_about_to_main(m_menu_start_x, m_menu_start_y, 200);
             break;
         case menu_view::HELP:
             break;
