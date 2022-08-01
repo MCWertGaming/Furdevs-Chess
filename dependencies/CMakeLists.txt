@@ -16,4 +16,4 @@ set(BUILD_GMOCK OFF CACHE BOOL "disable gmock" FORCE)
 add_dependency_local(GTest)
 
 # Godot - UI
-add_dependency_local(godot-cpp)
+#add_dependency_local(godot-cpp)
