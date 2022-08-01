@@ -1,6 +1,8 @@
 #include <iostream>
-#include <console/menu.hpp>
+#include <console/chess_tui.hpp>
 #include <cpp-terminal/base.hpp>
+#include "visual.hpp"
+#include "menu.hpp"
 
 int main() {
     // prepare the terminal
@@ -17,13 +19,8 @@ int main() {
         cols--;
     }
 
-    // start the menu
-    Menu::Menu menu;
-
-    menu.start();
-
-
-
+    Menu::Main_menu mainMenu;
+    mainMenu.start();
 
     return 0;
 }
