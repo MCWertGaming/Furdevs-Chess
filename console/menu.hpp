@@ -1,58 +1,57 @@
 #pragma once
 #include <cstddef>
-#include <chess/chess_class.hpp>
-#include <string>
-#include <cpp-terminal/base.hpp>
+#include <cstdint>
 
-namespace Menu {
-    enum class Input {
-        NONE,
-        WHITE_UP,
-        WHITE_DOWN,
-        WHITE_LEFT,
-        WHITE_RIGHT,
-        BLACK_UP,
-        BLACK_DOWN,
-        BLACK_LEFT,
-        BLACK_RIGHT,
-        PAUSE,
-        QUIT
+namespace Menu{
+    enum class menu_view{
+        TITLE, // first screen after startup
+        MAIN, // main menu
+        ABOUT, // credits screen
+        HELP, // Controls overview
+        SINGLE_PLAYER, // starts the game in single player
+        MP_MAIN, // main menu for multiplayer, chose Join or create
+        MP_CREATE, // shows the game code for others to join
+        MP_JOIN, // asks for the code to join match
+        MP_CONNECTING, // connection screen while the server waits for both clients to get ready
+        MP_ERROR, // error screen when the connection was lost
+        MP_START // Game runs in Multiplayer mode
     };
-    class Menu {
+    /* -> Menu Transitions
+     * TITLE -> Main
+     * Main -> TITLE
+     * MAIN -> ABOUT
+     * ABOUT -> MAIN
+     * MAIN -> HELP
+     * HELP -> MAIN
+     * MAIN -> SINGLE_PLAYER
+     * MAIN -> MP_MAIN
+     * MP_MAIN -> MP_CREATE
+     * MP_CREATE -> MP_CONNECTING
+     * MP_JOIN -> MP_CONNECTING
+     * MP_CONNECTING -> MP_ERROR
+     * MP_CONNECTING -> MP_START
+     */
+    class Main_menu {
     private:
-        void render();
-        bool tick();
-        int term_rows{}, term_cols{};
-        size_t get_field_x();
-        size_t get_field_y();
-        size_t get_game_x();
-        size_t get_game_y();
-        std::string get_print_piece(uint8_t x, uint8_t y);
-        std::string get_field_color(uint8_t field_x, uint8_t field_y, Term::bg field_color);
-        std::string get_field(uint8_t x, uint8_t y, Term::bg);
+        int m_menu_start_x{};
+        int m_menu_start_y{};
 
-        // cursor position
-        int cursor_x{};
-        int cursor_y{};
-        // the color that can move
-        Chess::Piece_color turn_color;
-        // last move origin
-        uint8_t last_move_x{};
-        uint8_t last_move_y{};
-        // last move destination
-        uint8_t last_dest_x{};
-        uint8_t last_dest_y{};
-        // turns of last move indicators on first move
-        bool first_move = false;
+        // printing utils
+        void print_cursor(uint8_t pos);
 
-        // parse input
-        static Input get_input();
+        // current menu
+        menu_view m_menu_view = menu_view::TITLE;
 
-        // chess field
-        Chess::Chess chess;
+        // menu windows, return false if the game exits
+        bool title_menu_view();
+        bool main_menu_view();
+        bool about_menu_view();
+
+        // helper functions
+        void set_new_view(menu_view next_view);
     public:
-        Menu();
-        ~Menu() = default;
+        Main_menu();
+        ~Main_menu() = default;
         void start();
     };
 }
