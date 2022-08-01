@@ -779,5 +779,8 @@ TEST(chess_class_test, piece_move_test) {
 }
 
 TEST(chess_class_test, new_test) {
-    //
+    Chess::Chess chess;
+    chess.init_game();
+    EXPECT_TRUE(chess.can_move(0,1,0,2));
+    EXPECT_TRUE(chess.can_move(0,1,0,3));
 }
