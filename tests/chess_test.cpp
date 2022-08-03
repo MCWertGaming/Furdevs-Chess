@@ -762,9 +762,10 @@ TEST(chess_class_test, piece_move_test) {
     EXPECT_EQ(chess.get_piece(7,6), Chess::Piece::king);
 }
 
-TEST(chess_class_test, new_test) {
+TEST(chess_class_test, fixed_bugs_in_early_testing) {
     Chess::Chess chess;
     chess.init_game();
     EXPECT_TRUE(chess.can_move(0,1,0,2));
     EXPECT_TRUE(chess.can_move(0,1,0,3));
+    EXPECT_FALSE(chess.can_move(4,0,4,2));
 }
