@@ -3,6 +3,7 @@
 #include <cpp-terminal/base.hpp>
 #include <cpp-terminal/input.hpp>
 #include <iostream>
+#include "chess_tui.hpp"
 
 Menu::Main_menu::Main_menu() {
     Term::get_term_size(m_menu_start_x, m_menu_start_y);
@@ -33,11 +34,13 @@ void Menu::Main_menu::start() {
                 running = main_menu_view(); // main menu with all options
                 break;
             case menu_view::ABOUT:
-                about_menu_view();
+                about_menu_view(); // shows Copyright
                 break;
             case menu_view::HELP:
+                help_menu_view(); // shows simple controls
                 break;
             case menu_view::SINGLE_PLAYER:
+                start_game();
                 break;
             case menu_view::MP_MAIN:
                 break;
@@ -114,7 +117,7 @@ bool Menu::Main_menu::main_menu_view() {
             m_menu_view = menu_view::MP_MAIN;
             break;
         case 2:
-            m_menu_view = menu_view::HELP;
+            set_new_view(menu_view::HELP);
             break;
         case 3:
             set_new_view(menu_view::ABOUT);
@@ -135,14 +138,18 @@ void Menu::Main_menu::set_new_view(menu_view next_view) {
                 Visual::animate_main_title(m_menu_start_x, m_menu_start_y, 2000);
             } else if (next_view == menu_view::ABOUT) {
                 Visual::animate_main_to_about(m_menu_start_x, m_menu_start_y, 200);
+            } else if(next_view == menu_view::HELP) {
+                Visual::animate_main_to_help(m_menu_start_x, m_menu_start_y, 200);
             }
             break;
         case menu_view::ABOUT: // next_view is always MAIN
             Visual::animate_about_to_main(m_menu_start_x, m_menu_start_y, 200);
             break;
-        case menu_view::HELP:
+        case menu_view::HELP: // next_view is always MAIN
+            Visual::animate_help_to_main(m_menu_start_x, m_menu_start_y, 200);
             break;
-        case menu_view::SINGLE_PLAYER:
+        case menu_view::SINGLE_PLAYER: // next_view is always MAIN
+            Visual::draw_main_menu(m_menu_start_x, m_menu_start_y, 0);
             break;
         case menu_view::MP_MAIN:
             break;
@@ -172,4 +179,24 @@ bool Menu::Main_menu::about_menu_view() {
                 return true;
         }
     }
+}
+bool Menu::Main_menu::help_menu_view() {
+    while(true) {
+        switch (Term::read_key()) {
+            case Term::Key::ESC:
+            case Term::Key::CTRL + 'c':
+                return false; // user quit the game
+            case 'q':
+            case Term::Key::ENTER:
+                set_new_view(menu_view::MAIN); // go back to the main screen
+                return true;
+        }
+    }
+}
+bool Menu::Main_menu::start_game() {
+    Chess_tui::Menu chess;
+    // TODO: Receive quit input
+    chess.start();
+    set_new_view(menu_view::MAIN);
+    return true;
 }

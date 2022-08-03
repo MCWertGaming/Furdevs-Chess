@@ -46,6 +46,10 @@ namespace Menu{
         bool title_menu_view();
         bool main_menu_view();
         bool about_menu_view();
+        bool help_menu_view();
+
+        // game wrapper
+        bool start_game();
 
         // helper functions
         void set_new_view(menu_view next_view);

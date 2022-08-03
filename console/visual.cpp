@@ -1180,3 +1180,191 @@ void Visual::animate_about_to_main(uint8_t start_x, uint8_t start_y, uint32_t ti
               << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
               << std::flush;
 }
+void Visual::animate_main_to_help(uint8_t start_x, uint8_t start_y, uint32_t time_ms) {
+    uint32_t frame_time = time_ms / 5;
+
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+6, start_y) << "│                      │"
+              << Term::move_cursor(start_x+7, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+8, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+9, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+10, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+6, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+7, start_y) << "│                      │"
+              << Term::move_cursor(start_x+8, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+9, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+10, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+6, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+7, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+8, start_y) << "│                      │"
+              << Term::move_cursor(start_x+9, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+10, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+6, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+7, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+8, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+9, start_y) << "│                      │"
+              << Term::move_cursor(start_x+10, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+6, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+7, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+8, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+9, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+10, start_y) << "│                      │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│                      │"
+              << Term::move_cursor(start_x+6, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+7, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+8, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+9, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+10, start_y) << "│   s              ↓   │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+}
+
+void Visual::animate_help_to_main(uint8_t start_x, uint8_t start_y, uint32_t time_ms) {
+    uint32_t frame_time = time_ms / 5;
+
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+6, start_y) << "│                      │"
+              << Term::move_cursor(start_x+7, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+8, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+9, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+10, start_y) << "│ a   d   ╵P╵    ←   → │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+6, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+7, start_y) << "│                      │"
+              << Term::move_cursor(start_x+8, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+9, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+10, start_y) << "│   w     │L│      ↑   │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+6, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+7, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+8, start_y) << "│                      │"
+              << Term::move_cursor(start_x+9, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+10, start_y) << "│         │E│          │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+6, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+7, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+8, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+9, start_y) << "│                      │"
+              << Term::move_cursor(start_x+10, start_y) << "│ white   ╷H╷    black │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+    Fox::sleep_for(frame_time);
+    std::cout << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│                      │"
+              << Term::move_cursor(start_x+6, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+7, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+8, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+9, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+10, start_y) << "│                      │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+
+}
+
+void Visual::draw_main_menu(uint8_t start_x, uint8_t start_y, uint32_t time_ms) {
+    std::cout << Term::clear_screen()
+    << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│                      │"
+              << Term::move_cursor(start_x+6, start_y) << "│  LOCAL               │"
+              << Term::move_cursor(start_x+7, start_y) << "│  ONLINE              │"
+              << Term::move_cursor(start_x+8, start_y) << "│  HELP                │"
+              << Term::move_cursor(start_x+9, start_y) << "│  CREDITS             │"
+              << Term::move_cursor(start_x+10, start_y) << "│                      │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+}
