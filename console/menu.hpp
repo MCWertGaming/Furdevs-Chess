@@ -37,7 +37,7 @@ namespace Menu{
         int m_menu_start_y{};
 
         // printing utils
-        void print_cursor(uint8_t pos);
+        void print_cursor(uint8_t pos) const;
 
         // current menu
         menu_view m_menu_view = menu_view::TITLE;

@@ -24,8 +24,8 @@ namespace Chess_tui {
         void render();
         bool tick();
         int term_rows{}, term_cols{};
-        size_t get_field_x();
-        size_t get_field_y();
+        size_t get_field_x() const;
+        size_t get_field_y() const;
         size_t get_game_x();
         size_t get_game_y();
         std::string get_print_piece(uint8_t x, uint8_t y);

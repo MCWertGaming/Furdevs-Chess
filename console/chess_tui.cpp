@@ -4,10 +4,10 @@
 #include "cpp-terminal/window.hpp"
 #include <cpp-terminal/input.hpp>
 
-size_t Chess_tui::Menu::get_field_x() {
+size_t Chess_tui::Menu::get_field_x() const {
     return (term_cols - 23) / 2;
 }
-size_t Chess_tui::Menu::get_field_y() {
+size_t Chess_tui::Menu::get_field_y() const {
     return (term_rows - 12) / 2;
 }
 size_t Chess_tui::Menu::get_game_x() {

@@ -47,7 +47,6 @@ namespace Chess {
     public: // TODO: Make private? (testing needed)
         Piece get_piece(uint8_t x, uint8_t y);
         Piece_color get_color(uint8_t x, uint8_t y);
-        // TODO: remove
         void set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color);
         void remove_piece(uint8_t x, uint8_t y);
         // TODO: add testing

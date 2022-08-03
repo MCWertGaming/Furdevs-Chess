@@ -11,7 +11,7 @@ Menu::Main_menu::Main_menu() {
     m_menu_start_x = (m_menu_start_x - 12) / 2;
 }
 
-void Menu::Main_menu::print_cursor(uint8_t pos) {
+void Menu::Main_menu::print_cursor(uint8_t pos) const {
     std::cout << Term::move_cursor(m_menu_start_x+6, m_menu_start_y+19) << "  "
             << Term::move_cursor(m_menu_start_x+7, m_menu_start_y+19) << "  "
             << Term::move_cursor(m_menu_start_x+8, m_menu_start_y+19) << "  "
