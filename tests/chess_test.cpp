@@ -4,20 +4,19 @@
 TEST(chess_class_test, piece_creation_error) {
     Chess::Chess chess;
     // check for error on going out of the field (this would result in undefined behavior)
-    EXPECT_THROW(chess.set_piece(8, 0, Chess::Piece::empty, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 8, Chess::Piece::empty, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(8, 0, Chess::Piece::empty, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 8, Chess::Piece::empty, Chess::Piece_color::empty), std::runtime_error);
     // check for error when attributes are added wrongly
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::empty, Chess::Piece_color::black, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::empty, Chess::Piece_color::white, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::empty, Chess::Piece_color::empty, Chess::Piece_extra::castling_possible), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::empty, Chess::Piece_color::black), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::empty, Chess::Piece_color::white), std::runtime_error);
     // check if attributes are mossing
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::pawn, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::queen, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::queen, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::bishop, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::rook, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
-    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::empty, Chess::Piece_extra::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::pawn, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::queen, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::queen, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::bishop, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::rook, Chess::Piece_color::empty), std::runtime_error);
+    EXPECT_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::empty), std::runtime_error);
 }
 
 TEST(chess_class_test, piece_creation_empty) {
@@ -25,7 +24,7 @@ TEST(chess_class_test, piece_creation_empty) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::empty, Chess::Piece_color::empty, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::empty, Chess::Piece_color::empty));
         }
     }
     // check if everything is empty
@@ -33,7 +32,6 @@ TEST(chess_class_test, piece_creation_empty) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::empty);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::empty);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -43,7 +41,7 @@ TEST(chess_class_test, piece_creation_pawn_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -51,7 +49,6 @@ TEST(chess_class_test, piece_creation_pawn_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::pawn);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -60,7 +57,7 @@ TEST(chess_class_test, piece_creation_pawn_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -68,7 +65,6 @@ TEST(chess_class_test, piece_creation_pawn_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::pawn);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -77,7 +73,7 @@ TEST(chess_class_test, piece_creation_queen_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::queen, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -85,7 +81,6 @@ TEST(chess_class_test, piece_creation_queen_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::queen);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -94,7 +89,7 @@ TEST(chess_class_test, piece_creation_queen_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::queen, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::queen, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -102,7 +97,6 @@ TEST(chess_class_test, piece_creation_queen_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::queen);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -111,7 +105,7 @@ TEST(chess_class_test, piece_creation_king_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::king, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -119,7 +113,6 @@ TEST(chess_class_test, piece_creation_king_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::king);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -128,7 +121,7 @@ TEST(chess_class_test, piece_creation_king_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::king, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -136,7 +129,6 @@ TEST(chess_class_test, piece_creation_king_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::king);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -146,7 +138,7 @@ TEST(chess_class_test, piece_creation_rook_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::rook, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -154,7 +146,6 @@ TEST(chess_class_test, piece_creation_rook_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::rook);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -163,7 +154,7 @@ TEST(chess_class_test, piece_creation_rook_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::rook, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -171,7 +162,6 @@ TEST(chess_class_test, piece_creation_rook_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::rook);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -180,7 +170,7 @@ TEST(chess_class_test, piece_creation_bishop_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::bishop, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::bishop, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -188,7 +178,6 @@ TEST(chess_class_test, piece_creation_bishop_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::bishop);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -197,7 +186,7 @@ TEST(chess_class_test, piece_creation_bishop_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::bishop, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::bishop, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -205,7 +194,6 @@ TEST(chess_class_test, piece_creation_bishop_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::bishop);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -214,7 +202,7 @@ TEST(chess_class_test, piece_creation_knight_white) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::knight, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::knight, Chess::Piece_color::white));
         }
     }
     // check if everything is empty
@@ -222,7 +210,6 @@ TEST(chess_class_test, piece_creation_knight_white) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::knight);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::white);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -231,7 +218,7 @@ TEST(chess_class_test, piece_creation_knight_black) {
     // make sure everything is empty
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::knight, Chess::Piece_color::black, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::knight, Chess::Piece_color::black));
         }
     }
     // check if everything is empty
@@ -239,7 +226,6 @@ TEST(chess_class_test, piece_creation_knight_black) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::knight);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::black);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -249,7 +235,7 @@ TEST(chess_class_test, init_empty) {
     // make the field full of pawns
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white));
         }
     }
     // clear the field
@@ -260,7 +246,6 @@ TEST(chess_class_test, init_empty) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::empty);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::empty);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -269,7 +254,7 @@ TEST(chess_class_test, piece_remove) {
     // place pawns on the whole field
     for(uint8_t i = 0; i < 8; i++) {
         for(uint8_t j = 0; j < 8; j++) {
-            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
+            EXPECT_NO_THROW(chess.set_piece(i, j, Chess::Piece::pawn, Chess::Piece_color::white));
         }
     }
     // remove all pieces
@@ -283,7 +268,6 @@ TEST(chess_class_test, piece_remove) {
         for(uint8_t j = 0; j < 8; j++) {
             EXPECT_EQ(chess.get_piece(i, j), Chess::Piece::empty);
             EXPECT_EQ(chess.get_color(i, j), Chess::Piece_color::empty);
-            EXPECT_EQ(chess.get_extra(i, j), Chess::Piece_extra::empty);
         }
     }
 }
@@ -292,19 +276,19 @@ TEST(chess_class_test, pawn_movement_check_white) {
     Chess::Chess chess;
     // create a few test pieces
     EXPECT_NO_THROW(chess.init_empty());
-    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 2, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 2, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 3, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 5, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(3, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 2, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(4, 2, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(4, 3, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 5, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white));
     /*     0 1 2 3 4 5 6 7 X
      * 0 |
      * 1 | P P P P P
@@ -334,19 +318,19 @@ TEST(chess_class_test, pawn_movement_check_black) {
     Chess::Chess chess;
     // create a few test pieces
     EXPECT_NO_THROW(chess.init_empty());
-    EXPECT_NO_THROW(chess.set_piece(0, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 5, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(3, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(4, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(4, 5, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::black));
     /*     0 1 2 3 4 5 6 7 X
      * 0 |
      * 1 | B   B
@@ -374,15 +358,15 @@ TEST(chess_class_test, pawn_movement_check_black) {
 TEST(chess_class_test, rook_movement_check_white) {
     Chess::Chess chess;
 
-    EXPECT_NO_THROW(chess.set_piece(0, 3, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 7, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 5, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 1, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5, 5, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5, 3, Chess::Piece::queen, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 5, Chess::Piece::bishop, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 3, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 7, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(3, 5, Chess::Piece::rook, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(3, 1, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(5, 5, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(5, 3, Chess::Piece::queen, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(7, 5, Chess::Piece::bishop, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::king, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 |
@@ -419,15 +403,15 @@ TEST(chess_class_test, rook_movement_check_white) {
 TEST(chess_class_test, rook_movement_check_black) {
     Chess::Chess chess;
 
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 4, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 2, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 6, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5, 2, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5, 4, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 2, Chess::Piece::bishop, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 4, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(3, 2, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(3, 6, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(5, 2, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(5, 4, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7, 2, Chess::Piece::bishop, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 | R P
@@ -456,12 +440,12 @@ TEST(chess_class_test, rook_movement_check_black) {
 }
 TEST(chess_class_test, bishop_movement_check_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::bishop, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::queen, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 5, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 2, Chess::Piece::bishop, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::bishop, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 0, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::queen, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 5, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(3, 2, Chess::Piece::bishop, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 |   B
@@ -487,12 +471,12 @@ TEST(chess_class_test, bishop_movement_check_white) {
 }
 TEST(chess_class_test, bishop_movement_check_black) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::bishop, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 7, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 4, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(3, 5, Chess::Piece::bishop, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 1, Chess::Piece::bishop, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 7, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(2, 4, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(3, 5, Chess::Piece::bishop, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::black));
     /*     0 1 2 3 4 5 6 7 X
      * 0 |
      * 1 | W
@@ -517,11 +501,11 @@ TEST(chess_class_test, bishop_movement_check_black) {
 }
 TEST(chess_class_test, knight_movement_check_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(3, 4, Chess::Piece::knight, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::queen, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(3, 4, Chess::Piece::knight, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::queen, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 | K
@@ -551,11 +535,11 @@ TEST(chess_class_test, knight_movement_check_white) {
 }
 TEST(chess_class_test, knight_movement_check_black) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(3, 4, Chess::Piece::knight, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(3, 4, Chess::Piece::knight, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::knight, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 2, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::king, Chess::Piece_color::black));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 | K
@@ -585,7 +569,7 @@ TEST(chess_class_test, knight_movement_check_black) {
 }
 TEST(chess_class_test, king_movement_check_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(3, 3, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(3, 3, Chess::Piece::king, Chess::Piece_color::white));
 
     EXPECT_TRUE(chess.can_move(3, 3, 3, 4));
     EXPECT_TRUE(chess.can_move(3, 3, 4, 4));
@@ -599,7 +583,7 @@ TEST(chess_class_test, king_movement_check_white) {
 }
 TEST(chess_class_test, king_movement_check_black) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(3, 3, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(3, 3, Chess::Piece::king, Chess::Piece_color::black));
 
     EXPECT_TRUE(chess.can_move(3, 3, 3, 4));
     EXPECT_TRUE(chess.can_move(3, 3, 4, 4));
@@ -613,12 +597,12 @@ TEST(chess_class_test, king_movement_check_black) {
 }
 TEST(chess_class_test, queen_movement_check_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1, 4, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::rook, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1, 4, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 |
@@ -642,12 +626,12 @@ TEST(chess_class_test, queen_movement_check_white) {
 }
 TEST(chess_class_test, queen_movement_check_black) {
 Chess::Chess chess;
-EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::queen, Chess::Piece_color::black, Chess::Piece_extra::empty));
-EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::black, Chess::Piece_extra::empty));
-EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-EXPECT_NO_THROW(chess.set_piece(1, 4, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
-EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+EXPECT_NO_THROW(chess.set_piece(4, 4, Chess::Piece::queen, Chess::Piece_color::black));
+EXPECT_NO_THROW(chess.set_piece(4, 1, Chess::Piece::pawn, Chess::Piece_color::black));
+EXPECT_NO_THROW(chess.set_piece(1, 1, Chess::Piece::rook, Chess::Piece_color::black));
+EXPECT_NO_THROW(chess.set_piece(1, 4, Chess::Piece::rook, Chess::Piece_color::white));
+EXPECT_NO_THROW(chess.set_piece(2, 6, Chess::Piece::pawn, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black));
 
 /*     0 1 2 3 4 5 6 7 X
  * 0 |
@@ -671,33 +655,33 @@ EXPECT_FALSE(chess.can_move(4,4,0,4)); // move through piece
 }
 TEST(chess_class_test, king_in_danger_check_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0,0,Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7,7,Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0,0,Chess::Piece::king, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(7,7,Chess::Piece::king, Chess::Piece_color::black));
     // check if the king is in check
     EXPECT_TRUE(chess.king_in_danger(Chess::Piece_color::white));
     // check if pieces with the own color are wrongly detected
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white));
     EXPECT_FALSE(chess.king_in_danger(Chess::Piece_color::white));
 }
 TEST(chess_class_test, king_in_danger_check_black) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0,0,Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7,7,Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0,0,Chess::Piece::king, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7,7,Chess::Piece::king, Chess::Piece_color::white));
     // check if the king is in check
     EXPECT_TRUE(chess.king_in_danger(Chess::Piece_color::black));
     // check if pieces with the own color are wrongly detected
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black));
     EXPECT_FALSE(chess.king_in_danger(Chess::Piece_color::black));
 }
 TEST(chess_class_test, king_in_danger_after_move_white) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0,0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(1,7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2,3, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5,4, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4,6, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0,0, Chess::Piece::king, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(1,7, Chess::Piece::king, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2,3, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(5,4, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(4,6, Chess::Piece::rook, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 | K             Bk
@@ -715,7 +699,7 @@ TEST(chess_class_test, king_in_danger_after_move_white) {
     EXPECT_FALSE(chess.king_in_danger(4,6,7,6,Chess::Piece_color::white)); // set opponent in danger
 
     // place a piece to set the king into danger
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black));
     // make sure the king is in danger
     EXPECT_TRUE(chess.king_in_danger(Chess::Piece_color::white));
     // check if moving the king away helps
@@ -724,17 +708,17 @@ TEST(chess_class_test, king_in_danger_after_move_white) {
     EXPECT_FALSE(chess.king_in_danger(2, 3, 0, 3, Chess::Piece_color::white));
 
     // put piece in-between
-    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::rook, Chess::Piece_color::white));
     // check if the piece moving away causes danger
     EXPECT_FALSE(chess.king_in_danger(0,5,0,6,Chess::Piece_color::white));
 }
 TEST(chess_class_test, king_in_danger_move_piece) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::queen, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(5, 4, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(4, 6, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(2, 3, Chess::Piece::queen, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(5, 4, Chess::Piece::rook, Chess::Piece_color::black));
+    EXPECT_NO_THROW(chess.set_piece(4, 6, Chess::Piece::rook, Chess::Piece_color::white));
 
     /*     0 1 2 3 4 5 6 7 X
      * 0 | K             Bk
@@ -752,7 +736,7 @@ TEST(chess_class_test, king_in_danger_move_piece) {
     EXPECT_TRUE(chess.can_move(4, 6, 7, 6)); // set opponent in danger
 
     // place a piece to set the king into danger
-    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 7, Chess::Piece::rook, Chess::Piece_color::black));
     // make sure the king is in danger
     EXPECT_TRUE(chess.king_in_danger(Chess::Piece_color::white));
     // check if moving the king away helps
@@ -760,14 +744,14 @@ TEST(chess_class_test, king_in_danger_move_piece) {
     // check if moving the queen in-between helps
     EXPECT_TRUE(chess.can_move(2, 3, 0, 3));
     // put piece in-between
-    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::rook, Chess::Piece_color::white, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 5, Chess::Piece::rook, Chess::Piece_color::white));
     // check if the piece moving away causes danger
     EXPECT_FALSE(chess.can_move(0, 5, 1, 5));
 }
 TEST(chess_class_test, piece_move_test) {
     Chess::Chess chess;
-    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white, Chess::Piece_extra::empty));
-    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black, Chess::Piece_extra::empty));
+    EXPECT_NO_THROW(chess.set_piece(0, 0, Chess::Piece::king, Chess::Piece_color::white));
+    EXPECT_NO_THROW(chess.set_piece(7, 7, Chess::Piece::king, Chess::Piece_color::black));
     // move pieces
     EXPECT_NO_THROW(chess.move_piece(0,0,0,1));
     EXPECT_NO_THROW(chess.move_piece(7,7,7,6));

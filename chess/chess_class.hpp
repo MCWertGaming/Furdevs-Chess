@@ -16,10 +16,6 @@ namespace Chess {
         white = 10,
         black = 20
     };
-    enum class Piece_extra {
-        empty,
-        castling_possible = 100
-    };
     enum class Game_state {
         SUCCESS,
         INVALID,
@@ -52,8 +48,7 @@ namespace Chess {
         Piece get_piece(uint8_t x, uint8_t y);
         Piece_color get_color(uint8_t x, uint8_t y);
         // TODO: remove
-        Piece_extra get_extra(uint8_t x, uint8_t y);
-        void set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color, Piece_extra extra);
+        void set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color);
         void remove_piece(uint8_t x, uint8_t y);
         // TODO: add testing
         void move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);

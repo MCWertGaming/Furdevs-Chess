@@ -8,7 +8,6 @@ Chess::Piece Chess::Chess::get_piece(uint8_t x, uint8_t y) {
     }
     uint8_t field_val = m_Chess_field[x][y];
     // remove extra information
-    field_val = field_val - (uint8_t)get_extra(x,y);
     field_val = field_val - (uint8_t)get_color(x,y);
 
     switch (field_val) {
@@ -37,10 +36,6 @@ Chess::Piece_color Chess::Chess::get_color(uint8_t x, uint8_t y) {
         throw std::runtime_error("get_color: coordinates are not in the field");
     }
     uint8_t field_val = m_Chess_field[x][y];
-    // remove extra information
-    if(get_extra(x,y) != Piece_extra::empty) {
-        field_val = field_val - 100;
-    }
     // get the value
     if(field_val > (uint8_t)Piece_color::black) {
         return Piece_color::black;
@@ -50,21 +45,8 @@ Chess::Piece_color Chess::Chess::get_color(uint8_t x, uint8_t y) {
         return Piece_color::empty;
     }
 }
-Chess::Piece_extra Chess::Chess::get_extra(uint8_t x, uint8_t y) {
-    // avoid reading foreign memory
-    if(x >= 8 || y >= 8){
-        throw std::runtime_error("get_extra: coordinates are not in the field");
-    }
-    // TODO don't copy if possible
-    uint8_t field_val = m_Chess_field[x][y];
-    if(field_val > (uint8_t)Piece_extra::castling_possible) {
-        return Piece_extra::castling_possible;
-    } else {
-        return Piece_extra::empty;
-    }
-}
 
-void Chess::Chess::set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color, Piece_extra extra) {
+void Chess::Chess::set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color color) {
     // avoid memory corruption on wrongly calculated coordinates
     if(x >= 8 || y >= 8) {
         throw std::runtime_error("set_piece: coordinates are not in the field");
@@ -72,10 +54,6 @@ void Chess::Chess::set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color colo
     // make sure that colors are not dangling around
     else if (piece == Piece::empty && color != Piece_color::empty) {
         throw std::runtime_error("set_piece: can't create an empty piece with a color");
-    }
-    // also make sure that extra information are not dangling around
-    else if(piece == Piece::empty && extra != Piece_extra::empty) {
-        throw std::runtime_error("set_piece: can't create an empty piece with extra meta");
     }
     // also make sure that pieces aren't missing colors
     else if(piece != Piece::empty && color == Piece_color::empty) {
@@ -120,13 +98,7 @@ void Chess::Chess::set_piece(uint8_t x, uint8_t y, Piece piece, Piece_color colo
     }
     // set extra flags
     // TODO: Add en passant
-    switch (extra) {
-        case Piece_extra::empty: // nothing must be added
-            break;
-        case Piece_extra::castling_possible:
-            piece_val += 100;
-            break;
-    }
+
     // set the field
     m_Chess_field[x][y] = piece_val;
 }
@@ -439,32 +411,32 @@ bool Chess::Chess::check_checkmate(Piece_color color) {
 void Chess::Chess::init_empty() {
     for (uint8_t i = 0; i < 8; i++){
         for (uint8_t j = 0; j < 8; j++) {
-            set_piece(i, j, Piece::empty, Piece_color::empty, Piece_extra::empty);
+            set_piece(i, j, Piece::empty, Piece_color::empty);
         }
     }
 }
 void Chess::Chess::init_game() {
-    set_piece(0,0,Piece::rook, Piece_color::white, Piece_extra::empty);
-    set_piece(1,0,Piece::knight, Piece_color::white, Piece_extra::empty);
-    set_piece(2,0,Piece::bishop, Piece_color::white, Piece_extra::empty);
-    set_piece(3,0,Piece::queen, Piece_color::white, Piece_extra::empty);
-    set_piece(4,0,Piece::king, Piece_color::white, Piece_extra::empty);
-    set_piece(5,0,Piece::bishop, Piece_color::white, Piece_extra::empty);
-    set_piece(6,0,Piece::knight, Piece_color::white, Piece_extra::empty);
-    set_piece(7,0,Piece::rook, Piece_color::white, Piece_extra::empty);
+    set_piece(0,0,Piece::rook, Piece_color::white);
+    set_piece(1,0,Piece::knight, Piece_color::white);
+    set_piece(2,0,Piece::bishop, Piece_color::white);
+    set_piece(3,0,Piece::queen, Piece_color::white);
+    set_piece(4,0,Piece::king, Piece_color::white);
+    set_piece(5,0,Piece::bishop, Piece_color::white);
+    set_piece(6,0,Piece::knight, Piece_color::white);
+    set_piece(7,0,Piece::rook, Piece_color::white);
 
-    set_piece(0,7,Piece::rook, Piece_color::black, Piece_extra::empty);
-    set_piece(1,7,Piece::knight, Piece_color::black, Piece_extra::empty);
-    set_piece(2,7,Piece::bishop, Piece_color::black, Piece_extra::empty);
-    set_piece(3,7,Piece::queen, Piece_color::black, Piece_extra::empty);
-    set_piece(4,7,Piece::king, Piece_color::black, Piece_extra::empty);
-    set_piece(5,7,Piece::bishop, Piece_color::black, Piece_extra::empty);
-    set_piece(6,7,Piece::knight, Piece_color::black, Piece_extra::empty);
-    set_piece(7,7,Piece::rook, Piece_color::black, Piece_extra::empty);
+    set_piece(0,7,Piece::rook, Piece_color::black);
+    set_piece(1,7,Piece::knight, Piece_color::black);
+    set_piece(2,7,Piece::bishop, Piece_color::black);
+    set_piece(3,7,Piece::queen, Piece_color::black);
+    set_piece(4,7,Piece::king, Piece_color::black);
+    set_piece(5,7,Piece::bishop, Piece_color::black);
+    set_piece(6,7,Piece::knight, Piece_color::black);
+    set_piece(7,7,Piece::rook, Piece_color::black);
 
     // set pawns
     for(uint8_t i = 0; i < 8; i++) {
-        set_piece(i,1,Piece::pawn, Piece_color::white, Piece_extra::empty);
-        set_piece(i,6,Piece::pawn, Piece_color::black, Piece_extra::empty);
+        set_piece(i,1,Piece::pawn, Piece_color::white);
+        set_piece(i,6,Piece::pawn, Piece_color::black);
     }
 }
