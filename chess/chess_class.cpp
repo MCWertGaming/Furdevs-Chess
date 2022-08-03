@@ -313,7 +313,7 @@ bool Chess::Chess::can_king_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
     uint8_t vector_x = mk_vector(from_x, to_x) > 0 ? mk_vector(from_x, to_x) : -mk_vector(from_x, to_x);
     uint8_t vector_y = mk_vector(from_y, to_y) > 0 ? mk_vector(from_y, to_y) : -mk_vector(from_y, to_y);
     // check the movement
-    if(!(vector_x + vector_y == 1 || vector_x + vector_y == 2)) {
+    if(!(vector_x + vector_y == 1 || (vector_x + vector_y == 2 && vector_x != 0 && vector_y != 0))) {
         return false;
     }
     // movement possible
