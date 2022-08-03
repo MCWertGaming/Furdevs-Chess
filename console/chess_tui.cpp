@@ -181,8 +181,6 @@ void Chess_tui::Menu::render() {
             << "  └──────────────────┘"
             << Term::move_cursor(get_field_y()+11, get_field_x())
             << "    A B C D E F G H";
-
-    std::cout << Term::move_cursor(1,1) << "cursor pos: " << cursor_x << "," << cursor_y;
     std::cout << std::flush;
 }
 Chess_tui::Input Chess_tui::Menu::get_input() {
@@ -338,7 +336,6 @@ bool Chess_tui::Menu::move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
 }
 
 void Chess_tui::Menu::start() {
-    chess.remove_piece(3,1);
     bool running = true;
     while(running) {
         running = tick();
