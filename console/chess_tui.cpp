@@ -3,19 +3,6 @@
 #include <cpp-terminal/base.hpp>
 #include "cpp-terminal/window.hpp"
 #include <cpp-terminal/input.hpp>
-
-size_t Chess_tui::Menu::get_field_x() const {
-    return (term_cols - 23) / 2;
-}
-size_t Chess_tui::Menu::get_field_y() const {
-    return (term_rows - 12) / 2;
-}
-size_t Chess_tui::Menu::get_game_x() {
-    return get_field_x() - 3;
-}
-size_t Chess_tui::Menu::get_game_y() {
-    return get_field_y() - 1;
-}
 std::string Chess_tui::Menu::get_print_piece(uint8_t x, uint8_t y) {
     // last moved piece origin indicator
     if(x == last_move_x && y == last_move_y && !first_move) {
@@ -38,6 +25,7 @@ std::string Chess_tui::Menu::get_print_piece(uint8_t x, uint8_t y) {
         case Chess::Piece::queen:
             return chess.get_color(x,y) == Chess::Piece_color::white ? "♛ " : "♕ ";
     }
+    throw std::runtime_error("invalid piece");
 }
 std::string Chess_tui::Menu::get_field_color(uint8_t field_x, uint8_t field_y, Term::bg field_color) {
     // movement piece color
@@ -74,15 +62,8 @@ std::string Chess_tui::Menu::get_field(uint8_t x, uint8_t y, Term::bg field_colo
     return get_field_color(x, y, field_color).append(get_print_piece(x, y)).append(Term::color(Term::bg::reset));
 }
 
-Chess_tui::Menu::Menu() {
-    Term::get_term_size(term_rows, term_cols);
-    if (term_rows % 2 == 0) {
-        term_rows--;
-    }
-    if(term_cols % 2 == 0) {
-        term_cols--;
-    }
-    // init chess field
+Chess_tui::Menu::Menu(int _start_x, int _start_y)  : start_x{_start_x}, start_y{_start_y}{
+        // init chess field
     chess.init_game();
     // init own values
     first_move = true;
@@ -93,11 +74,11 @@ Chess_tui::Menu::Menu() {
 void Chess_tui::Menu::render() {
     std::cout << Term::clear_screen();
 
-    std::cout << Term::move_cursor(get_field_y(), get_field_x())
+    std::cout << Term::move_cursor(start_y, start_x)
             << "    A B C D E F G H"
-            << Term::move_cursor(get_field_y()+1, get_field_x())
+            << Term::move_cursor(start_y+1, start_x)
             << "  ┌──────────────────┐"
-            << Term::move_cursor(get_field_y()+2, get_field_x())
+            << Term::move_cursor(start_y+2, start_x)
             << "8 │ " << get_field(0, 7, Term::bg::black)
             << get_field(1, 7, Term::bg::yellow)
             << get_field(2, 7, Term::bg::black)
@@ -107,7 +88,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 7, Term::bg::black)
             << get_field(7, 7, Term::bg::yellow)
             << " │ 8"
-            << Term::move_cursor(get_field_y()+3, get_field_x())
+            << Term::move_cursor(start_y+3, start_x)
             << "7 │ " << get_field(0, 6, Term::bg::yellow)
             << get_field(1, 6, Term::bg::black)
             << get_field(2, 6, Term::bg::yellow)
@@ -117,7 +98,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 6, Term::bg::yellow)
             << get_field(7, 6, Term::bg::black)
             << " │ 7"
-            << Term::move_cursor(get_field_y()+4, get_field_x())
+            << Term::move_cursor(start_y+4, start_x)
             << "6 │ " << get_field(0, 5, Term::bg::black)
             << get_field(1, 5, Term::bg::yellow)
             << get_field(2, 5, Term::bg::black)
@@ -127,7 +108,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 5, Term::bg::black)
             << get_field(7, 5, Term::bg::yellow)
             << " │ 6"
-            << Term::move_cursor(get_field_y()+5, get_field_x())
+            << Term::move_cursor(start_y+5, start_x)
             << "5 │ " << get_field(0, 4, Term::bg::yellow)
             << get_field(1, 4, Term::bg::black)
             << get_field(2, 4, Term::bg::yellow)
@@ -137,7 +118,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 4, Term::bg::yellow)
             << get_field(7, 4, Term::bg::black)
             << " │ 5"
-            << Term::move_cursor(get_field_y()+6, get_field_x())
+            << Term::move_cursor(start_y+6, start_x)
             << "4 │ " << get_field(0, 3, Term::bg::black)
             << get_field(1, 3, Term::bg::yellow)
             << get_field(2, 3, Term::bg::black)
@@ -147,7 +128,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 3, Term::bg::black)
             << get_field(7, 3, Term::bg::yellow)
             << " │ 4"
-            << Term::move_cursor(get_field_y()+7, get_field_x())
+            << Term::move_cursor(start_y+7, start_x)
             << "3 │ " << get_field(0, 2, Term::bg::yellow)
             << get_field(1, 2, Term::bg::black)
             << get_field(2, 2, Term::bg::yellow)
@@ -157,7 +138,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 2, Term::bg::yellow)
             << get_field(7, 2, Term::bg::black)
             << " │ 3"
-            << Term::move_cursor(get_field_y()+8, get_field_x())
+            << Term::move_cursor(start_y+8, start_x)
             << "2 │ " << get_field(0, 1, Term::bg::black)
             << get_field(1, 1, Term::bg::yellow)
             << get_field(2, 1, Term::bg::black)
@@ -167,7 +148,7 @@ void Chess_tui::Menu::render() {
             << get_field(6, 1, Term::bg::black)
             << get_field(7, 1, Term::bg::yellow)
             << " │ 2"
-            << Term::move_cursor(get_field_y()+9, get_field_x())
+            << Term::move_cursor(start_y+9, start_x)
             << "1 │ " << get_field(0, 0, Term::bg::yellow)
             << get_field(1, 0, Term::bg::black)
             << get_field(2, 0, Term::bg::yellow)
@@ -177,10 +158,11 @@ void Chess_tui::Menu::render() {
             << get_field(6, 0, Term::bg::yellow)
             << get_field(7, 0, Term::bg::black)
             << " │ 1"
-            << Term::move_cursor(get_field_y()+10, get_field_x())
+            << Term::move_cursor(start_y+10, start_x)
             << "  └──────────────────┘"
-            << Term::move_cursor(get_field_y()+11, get_field_x())
+            << Term::move_cursor(start_y+11, start_x)
             << "    A B C D E F G H";
+
     std::cout << std::flush;
 }
 Chess_tui::Input Chess_tui::Menu::get_input() {
@@ -257,6 +239,9 @@ bool Chess_tui::Menu::tick() {
         case Input::SELECT:
             // TODO: enter piece move
             enter_move_mode();
+            if(game_over) { // quit on game over
+                return false;
+            }
             render();
             return true;
         case Input::QUIT:
@@ -321,6 +306,10 @@ void Chess_tui::Menu::enter_move_mode() {
                     moving = false;
                     if(turn_color == Chess::Piece_color::white) {turn_color = Chess::Piece_color::black;}
                     else {turn_color = Chess::Piece_color::white;}
+                    // enter loose screen if the game is over
+                    if(game_over) {
+                        game_over_screen();
+                    }
                 }
                 break;
         }
@@ -329,8 +318,17 @@ void Chess_tui::Menu::enter_move_mode() {
 }
 
 bool Chess_tui::Menu::move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y) {
-    if (chess.do_move(from_x, from_y, to_x, to_y, turn_color) == Chess::Game_state::SUCCESS) {
-        return true;
+    switch(chess.do_move(from_x, from_y, to_x, to_y, turn_color)) {
+        case Chess::Game_state::SUCCESS:
+            return true;
+        case Chess::Game_state::INVALID:
+            break;
+        case Chess::Game_state::STALEMATE:
+        case Chess::Game_state::DRAW:
+            stalemate = true;
+        case Chess::Game_state::CHECKMATE:
+            game_over = true;
+            return true;
     }
     return false;
 }
@@ -340,4 +338,43 @@ void Chess_tui::Menu::start() {
     while(running) {
         running = tick();
     }
+}
+
+void Chess_tui::Menu::game_over_screen() {
+    std::cout << Term::clear_screen()
+            << Term::move_cursor(start_y, start_x)
+            << "    A B C D E F G H"
+            << Term::move_cursor(start_y+1, start_x)
+            << "  ┌──────────────────┐"
+            << Term::move_cursor(start_y+2, start_x)
+            << "8 │                  │ 8"
+            << Term::move_cursor(start_y+3, start_x)
+            << "7 │                  │ 7"
+            << Term::move_cursor(start_y+4, start_x)
+            << "6 │    " << get_color_string() << "    │ 6"
+            << Term::move_cursor(start_y+5, start_x)
+            << "5 │    ──────────    │ 5"
+            << Term::move_cursor(start_y+6, start_x)
+            << "4 │                  │ 4"
+            << Term::move_cursor(start_y+7, start_x)
+            << "3 │     > Back <     │ 3"
+            << Term::move_cursor(start_y+8, start_x)
+            << "2 │                  │ 2"
+            << Term::move_cursor(start_y+9, start_x)
+            << "1 │                  │ 1"
+            << Term::move_cursor(start_y+10, start_x)
+            << "  └──────────────────┘"
+            << Term::move_cursor(start_y+11, start_x)
+            << "    A B C D E F G H" << std::flush;
+
+    Term::read_key(); // wait for a key press
+}
+std::string Chess_tui::Menu::get_color_string() {
+    if (stalemate) {
+        return "Stale mate";
+    }
+    if(turn_color == Chess::Piece_color::white) {
+        return "White Wins";
+    }
+    return "Black Wins";
 }

@@ -769,3 +769,31 @@ TEST(chess_class_test, fixed_bugs_in_early_testing) {
     EXPECT_TRUE(chess.can_move(0,1,0,3));
     EXPECT_FALSE(chess.can_move(4,0,4,2));
 }
+TEST(chess_class_test, en_passant_test) {
+    Chess::Chess chess;
+    chess.init_game();
+    EXPECT_EQ(chess.do_move(3,1,3,3, Chess::Piece_color::white), Chess::Game_state::SUCCESS);
+    EXPECT_EQ(chess.do_move(1,6,1,4, Chess::Piece_color::black), Chess::Game_state::SUCCESS);
+    EXPECT_EQ(chess.do_move(3,3,3,4, Chess::Piece_color::white), Chess::Game_state::SUCCESS);
+    EXPECT_EQ(chess.do_move(4,6,4,4, Chess::Piece_color::black), Chess::Game_state::SUCCESS);
+    // en passant move
+    EXPECT_TRUE(chess.can_move(3,4,4,5)); // test if the check move function works
+    EXPECT_EQ(chess.do_move(3,4,4,5, Chess::Piece_color::white), Chess::Game_state::SUCCESS);
+    // a bug that occurred
+    EXPECT_EQ(chess.do_move(4,4,3,3, Chess::Piece_color::black), Chess::Game_state::INVALID);
+    // check if the removed piece was actually removed
+    EXPECT_EQ(chess.get_piece(4,4), Chess::Piece::empty);
+    EXPECT_EQ(chess.get_color(4,4), Chess::Piece_color::empty);
+}
+
+TEST(chess_class_test, game_state_test) {
+    Chess::Chess chess;
+    chess.init_game();
+    EXPECT_EQ(chess.do_move(4,1,4,3, Chess::Piece_color::white), Chess::Game_state::SUCCESS);
+    EXPECT_EQ(chess.do_move(5,6,5,5, Chess::Piece_color::black), Chess::Game_state::SUCCESS);
+
+    EXPECT_EQ(chess.do_move(3,1,3,3, Chess::Piece_color::white), Chess::Game_state::SUCCESS);
+    EXPECT_EQ(chess.do_move(6,6,6,4, Chess::Piece_color::black), Chess::Game_state::SUCCESS);
+    // move should result into checkmate
+    EXPECT_EQ(chess.do_move(3,0,7,4, Chess::Piece_color::white), Chess::Game_state::CHECKMATE);
+}

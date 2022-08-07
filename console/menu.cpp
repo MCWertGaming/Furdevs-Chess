@@ -194,7 +194,7 @@ bool Menu::Main_menu::help_menu_view() {
     }
 }
 bool Menu::Main_menu::start_game() {
-    Chess_tui::Menu chess;
+    Chess_tui::Menu chess{m_menu_start_y, m_menu_start_x};
     // TODO: Receive quit input
     chess.start();
     set_new_view(menu_view::MAIN);

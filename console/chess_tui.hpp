@@ -23,11 +23,8 @@ namespace Chess_tui {
     private:
         void render();
         bool tick();
-        int term_rows{}, term_cols{};
-        size_t get_field_x() const;
-        size_t get_field_y() const;
-        size_t get_game_x();
-        size_t get_game_y();
+        int start_x, start_y;
+
         std::string get_print_piece(uint8_t x, uint8_t y);
         std::string get_field_color(uint8_t field_x, uint8_t field_y, Term::bg field_color);
         std::string get_field(uint8_t x, uint8_t y, Term::bg);
@@ -59,10 +56,19 @@ namespace Chess_tui {
         // move piece
         bool move_piece(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y);
 
+        // game state
+        bool game_over = false;
+        bool stalemate = false;
+
+        // game over screen
+        void game_over_screen();
+        // returns the current color as string for the game over screen
+        std::string get_color_string();
+
         // chess field
         Chess::Chess chess;
     public:
-        Menu();
+        Menu(int _start_x, int _start_y);
         ~Menu() = default;
         void start();
     };

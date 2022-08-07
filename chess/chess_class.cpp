@@ -156,42 +156,56 @@ bool Chess::Chess::can_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_
         if(king_in_danger(from_x, from_y, to_x, to_y, get_color(from_x, from_y))) {
             return false;
         }
-
-    // set en passant
-    if(m_en_passant_done) {
-        m_en_passant_possible = true;
-    } else {
-        m_en_passant_possible = false;
-    }
-    m_en_passant_done = false;
     // TODO: castling in the king movement
 
     return true;
 }
 Chess::Game_state Chess::Chess::do_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, uint8_t to_y, Piece_color color) {
+    // clear the en_passant set indicator
+    m_set_en_passant = false;
+    en_passant_happened = false;
+
     // check if the given piece is of the right color and the right color is moving
     if(get_color(from_x, from_y) != color || m_last_move_color == color) {
         return Game_state::INVALID;
     }
+
     // check the movement
-    else if(!can_move(from_x, from_y, to_x, to_y)) {
+    if(!can_move(from_x, from_y, to_x, to_y)) {
         return Game_state::INVALID;
     }
 
     // perform the movement
     move_piece(from_x, from_y, to_x, to_y);
 
-    // TODO: Check for checkmate
-    // TODO: Check for stalemate
     // TODO: Check for draw
     // TODO: Promotion
 
-    // finishing up en-passant
-    m_en_passant_possible = m_en_passant_done;
-    m_en_passant_done = false;
+    // set en_passant coordinates if needed
+    if(m_set_en_passant) {
+        m_en_passant_location[0] = from_x;
+        m_en_passant_location[1] = from_y + (m_set_en_passant_dir * -1);
+        m_en_passant_possible = true;
+    } else {
+        m_en_passant_possible = false;
+    }
+
+    if(en_passant_happened) {
+        remove_piece(from_x - mk_vector(from_x, to_x), from_y);
+    }
 
     // finishing up
     m_last_move_color = color;
+
+    // checking game state
+    Piece_color color_next = color == Piece_color::white ? Piece_color::black : Piece_color::white;
+    if(check_stalemate(color_next)) {
+        if(king_in_danger(color_next)) {
+            return Game_state::CHECKMATE;
+        }
+        return Game_state::STALEMATE;
+    }
+
     return Game_state::SUCCESS;
 }
 
@@ -225,6 +239,9 @@ bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
         // pawn moved two forward
         // check if the destination is empty and if the filed between is empty too
         if(destination == Piece::empty && get_piece(from_x, from_y + (direction * -1)) == Piece::empty) {
+            // set en passant location
+            m_set_en_passant = true;
+            m_set_en_passant_dir = direction;
             // the move can happen
             return true;
         }
@@ -239,6 +256,7 @@ bool Chess::Chess::can_pawn_move(uint8_t from_x, uint8_t from_y, uint8_t to_x, u
         }
         // check if the pawn is doing en passant
         else if(m_en_passant_possible && m_en_passant_location[0] == to_x && m_en_passant_location[1] == to_y) {
+            en_passant_happened = true;
             return true;
         }
         return false;
@@ -388,24 +406,42 @@ bool Chess::Chess::king_in_danger(uint8_t from_x, uint8_t from_y, uint8_t to_x, 
     // return the result
     return danger;
 }
-bool Chess::Chess::check_checkmate(Piece_color color) {
-    // find the king
-    Cords king = find_king(color);
-    // check if the king can move
-    if(can_move(king.x, king.y, king.x+1, king.y) ||
-       can_move(king.x, king.y, king.x+1, king.y+1) ||
-            can_move(king.x, king.y, king.x, king.y+1) ||
-            can_move(king.x, king.y, king.x-1, king.y+1) ||
-            can_move(king.x, king.y, king.x-1, king.y) ||
-            can_move(king.x, king.y, king.x-1, king.y-1) ||
-            can_move(king.x, king.y, king.x+1, king.y-1)) {
-        // the king can move away
-        return false;
+bool Chess::Chess::moving_possible(uint8_t field_x, uint8_t field_y) {
+    for(uint8_t i = 0; i < 8; i++) {
+        for(uint8_t j = 0; j < 8; j++) {
+            // check if the piece can move somewhere
+            if(can_move(field_x, field_y, i, j)) {
+                return true;
+            }
+        }
     }
-    // find the opponent
-    // TODO: finish
+    return false;
 }
 
+bool Chess::Chess::check_checkmate(Piece_color color) {
+    // check if it's stalemate
+    if(check_stalemate(color)) {
+        // check if the king is in danger as well
+        if(king_in_danger(color)) {
+            return true;
+        }
+    }
+    return false;
+}
+bool Chess::Chess::check_stalemate(Piece_color color) {
+    for(uint8_t i = 0; i < 8; i++) {
+        for(uint8_t j = 0; j < 8; j++) {
+            // check if the piece is the right color
+            if(get_color(i, j) == color) {
+                // check if the piece can move somewhere
+                if(moving_possible(i, j)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
 
 
 void Chess::Chess::init_empty() {

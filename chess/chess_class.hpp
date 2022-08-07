@@ -32,14 +32,16 @@ namespace Chess {
     private:
         // uint8_t can hold 0-255
         uint8_t m_Chess_field[8][8]{};
-        // indicates if en-passant is possible for this round, used by can_pawn_move()
-        // TODO: implement
-        bool m_en_passant_possible = false;
         // indicates if en-passant is possible in the next move, used by move_piece()
-        // TODO: implement function
-        bool m_en_passant_done = false;
+        bool m_en_passant_possible = false;
+        // indicates that en-passant should be set if a move happened
+        bool m_set_en_passant = false;
+        int8_t m_set_en_passant_dir{};
+        // indicates that en-passant has happened
+        bool en_passant_happened = false;
+
+    public: // TODO: Debug
         // stores the en passant location of the last moved pawn, (x,y), used by can_pawn_move()
-        // TODO: Implement
         uint8_t m_en_passant_location[2]{};
         // indicates which color did the last move
         Piece_color m_last_move_color = Piece_color::empty;
@@ -73,6 +75,8 @@ namespace Chess {
         Cords find_king(Piece_color color);
         // find the piece that causes check
         Cords find_enemy(Cords king, Piece_color color);
+        // check if the given piece can move
+        bool moving_possible(uint8_t field_x, uint8_t field_y);
         // check if the king is in danger on its current position
         bool king_in_danger(Piece_color color);
         // checks if the king would be in danger when the piece is moved
@@ -81,7 +85,7 @@ namespace Chess {
         // check if it's checkmate
         bool check_checkmate(Piece_color color);
         // check if it's stalemate
-        bool check_stalemate();
+        bool check_stalemate(Piece_color color);
         // check for draw
         bool check_draw();
 
