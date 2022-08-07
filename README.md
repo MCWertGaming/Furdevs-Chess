@@ -22,7 +22,7 @@ A Chess game for the Furdevs coding challenge 0x001.
 ![](media/field.png)
 
 ## Pre-build binaries
-(Coming soon)
+Check the release [here](https://github.com/MCWertGaming/Furdevs-Chess/releases/tag/submission).
 
 ## Compiling
 ### Linux
