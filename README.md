@@ -17,6 +17,10 @@ A Chess game for the Furdevs coding challenge 0x001.
 - Fully tested
   - The chess engine is fully covered by unit testing
 
+## Screenshots
+![](media/menu.png)
+![](media/field.png)
+
 ## Pre-build binaries
 (Coming soon)
 
