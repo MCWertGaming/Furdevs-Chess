@@ -1368,3 +1368,20 @@ void Visual::draw_main_menu(uint8_t start_x, uint8_t start_y, uint32_t time_ms) 
               << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
               << std::flush;
 }
+
+void Visual::draw_coming_soon_online(uint8_t start_x, uint8_t start_y) {
+    std::cout << Term::clear_screen()
+              << Term::move_cursor(start_x, start_y) << "┌──────────────────────┐"
+              << Term::move_cursor(start_x+1, start_y) << "│  ┌─╴ ╷ ╷ ┌─ ┌─╴ ┌─╴  │"
+              << Term::move_cursor(start_x+2, start_y) << "│  │   ├─┤ ├─ └─┐ └─┐  │"
+              << Term::move_cursor(start_x+3, start_y) << "│  └─╴ ╵ ╵ └─ ╶─┘ ╶─┘  │"
+              << Term::move_cursor(start_x+4, start_y) << "│  ──────────────────  │"
+              << Term::move_cursor(start_x+5, start_y) << "│                      │"
+              << Term::move_cursor(start_x+6, start_y) << "│        Online        │"
+              << Term::move_cursor(start_x+7, start_y) << "│        ╶────╴        │"
+              << Term::move_cursor(start_x+8, start_y) << "│    Not implemented   │"
+              << Term::move_cursor(start_x+9, start_y) << "│                      │"
+              << Term::move_cursor(start_x+10, start_y) << "│                      │"
+              << Term::move_cursor(start_x+11, start_y) << "└──────────────────────┘"
+              << std::flush;
+}

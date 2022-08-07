@@ -43,6 +43,7 @@ void Menu::Main_menu::start() {
                 start_game();
                 break;
             case menu_view::MP_MAIN:
+                help_menu_view();
                 break;
             case menu_view::MP_CREATE:
                 break;
@@ -114,7 +115,7 @@ bool Menu::Main_menu::main_menu_view() {
             m_menu_view = menu_view::SINGLE_PLAYER;
             break;
         case 1:
-            m_menu_view = menu_view::MP_MAIN;
+            set_new_view(menu_view::MP_MAIN);
             break;
         case 2:
             set_new_view(menu_view::HELP);
@@ -140,6 +141,8 @@ void Menu::Main_menu::set_new_view(menu_view next_view) {
                 Visual::animate_main_to_about(m_menu_start_x, m_menu_start_y, 200);
             } else if(next_view == menu_view::HELP) {
                 Visual::animate_main_to_help(m_menu_start_x, m_menu_start_y, 200);
+            } else if(next_view == menu_view::MP_MAIN) {
+                Visual::draw_coming_soon_online(m_menu_start_x, m_menu_start_y);
             }
             break;
         case menu_view::ABOUT: // next_view is always MAIN
@@ -152,6 +155,7 @@ void Menu::Main_menu::set_new_view(menu_view next_view) {
             Visual::draw_main_menu(m_menu_start_x, m_menu_start_y, 0);
             break;
         case menu_view::MP_MAIN:
+            Visual::draw_main_menu(m_menu_start_x, m_menu_start_y, 0);
             break;
         case menu_view::MP_CREATE:
             break;

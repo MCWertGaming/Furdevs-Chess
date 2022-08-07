@@ -19,4 +19,6 @@ namespace Visual {
     void animate_help_to_main(uint8_t start_x, uint8_t start_y, uint32_t time_ms);
 
     void draw_main_menu(uint8_t start_x, uint8_t start_y, uint32_t time_ms);
+
+    void draw_coming_soon_online(uint8_t start_x, uint8_t start_y);
 }
